@@ -1,0 +1,396 @@
+# Default config for sway
+#
+# Copy this to ~/.config/sway/config and edit it to your liking.
+#
+# Read `man 5 sway` for a complete reference.
+
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod4
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+font pango:Iosevka 12
+
+set $term foot
+set $browser librewolf
+set $filemanager $term -e ranger
+set $mailclient $term -e aerc
+set $musicplayer $term -e termusic
+
+set $monitor HDMI-A-1
+
+output $monitor resolution 3840x2160@59.940Hz
+# output $projector resolution 1920x1080 position 2880,0
+output * scale_filter smart
+
+# --- OPTION 1: Mirroring (Clone Display) ---
+# Useful for presentations where you want to see what they see.
+# Note: Mirroring forces the projector to match your laptop's resolution 
+# or a common supported resolution.
+# output $projector enable mirror $laptop
+
+# --- OPTION 2: Extension (Dual Monitor) ---
+# Extends the workspace to the right of your laptop screen.
+output $projector enable pos 1920 0
+# res 1920 1080 
+
+# --no-generic: hides generic names like "Web Browser" and shows "Firefox"
+# --dmenu: tells j4 to use bemenu as the UI
+# Gruvbox Dark Hard Colors
+set $bg      #1d2021
+set $fg      #ebdbb2
+set $gray    #928374
+set $yellow  #fabd2f
+set $green   #b8bb26
+set $red     #fb4934
+
+set $menu j4-dmenu-desktop --no-generic --dmenu="(cat; stest -flx $(echo $PATH | tr : ' ')) | sort -u | bemenu -i \
+    --nb '$bg' --nf '$fg' \
+    --hb '$bg' --hf '$yellow' \
+    --sb '$bg' --sf '$green' \
+    --tb '$bg' --tf '$red' \
+    --fb '$bg' --ff '$fg' \
+    --ab '$bg' --af '$fg' \
+    --border 2 --bdr '$yellow' --border-radius 10 \
+    -p 'Run:'"
+
+for_window [app_id="^launcher$"] {
+    floating enable
+    border pixel 2
+    border_color #fabd2f
+    shadow_enable yes
+    shadow_blur 15
+    shadow_color #fabd2f66
+    corner_radius 10
+}
+
+
+
+set $notifications mako
+set $gentoo_purple #7154a1
+set $gentoo_dark   #2e2345
+
+# Syntax:           border          background      text     indicator       child_border
+client.focused      $gentoo_purple  $gentoo_purple  #ffffff  $gentoo_purple  $gentoo_purple
+client.unfocused   $gentoo_dark    $gentoo_dark    #888888  $gentoo_dark    $gentoo_dark
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# Example configuration:
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+
+focus_follows_mouse yes
+default_border pixel 2
+default_floating_border pixel 2
+gaps inner 5
+gaps outer 5
+# smart_gaps on
+# smart_borders on
+# unfocused_floating_opacity 0.95
+for_window [floating] opacity 0.95
+for_window [window_role = "pop-up"] floating enable
+for_window [window_role = "bubble"] floating enable
+for_window [window_role = "dialog"] floating enable
+for_window [window_type = "dialog"] floating enable
+for_window [window_role = "task_dialog"] floating enable
+for_window [window_type = "menu"] floating enable
+for_window [app_id = "floating"] floating enable
+for_window [app_id = "floating_update"] floating enable, resize set width 1000px height 600px
+for_window [class = "(?i)pinentry"] floating enable
+for_window [title = "Administrator privileges required"] floating enable
+for_window [title = "About Mozilla Firefox"] floating enable
+for_window [window_role = "About"] floating enable
+for_window [app_id="firefox" title="Library"] floating enable, border pixel 1, sticky enable
+for_window [class="^(steam$)" title="^(?!Steam$)"] floating enable
+for_window [app_id="waybar_nmtui"] floating enable, resize set 800 600, move position center
+for_window [app_id="org.pwmt.zathura"] focus
+
+# output * render_direct_scanout on
+# output * adaptive_sync on
+# output * max_render_time 6
+
+### Idle configuration
+#
+# Example configuration:
+#
+# exec swayidle -w \
+#    timeout 600 'swaylock -f -c 000000' \
+#    timeout 600 'swaymsg "output * power off"; brightnessctl -d "tpacpi::kbd_backlight" set 0' \
+#    resume 'swaymsg "output * power on"; brightnessctl -d "tpacpi::kbd_backlight" set 1' \
+#    before-sleep 'swaylock -f -c 000000'
+
+# bindswitch lid:on exec swaylock -f -c 000000 && ZZZ
+
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+# Example configuration:
+#
+#   input type:touchpad {
+#       dwt enabled
+#       tap enabled
+#       natural_scroll enabled
+#       middle_emulation enabled
+#   }
+#
+#   input type:keyboard {
+#       xkb_layout "eu"
+#   }
+#
+# You can also configure each device individually.
+# Read `man 5 sway-input` for more information about this section.
+
+input type:touchpad {
+    dwt enabled             # Disable While Typing
+    tap enabled             # Tap to click
+    natural_scroll enabled  # Invert scrolling direction (Mac-style)
+    pointer_accel 0.5       # Speed: -1.0 to 1.0 (0.0 is default)
+    accel_profile adaptive  # adaptive (speed changes with movement) or flat
+}
+
+input type:keyboard {
+	xkb_layout "us,tr"
+	xkb_options "grp:win_space_toggle,caps:capslock"
+	repeat_delay 200
+	repeat_rate 60
+}
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+    bindsym $mod+w exec $browser
+    bindsym $mod+n exec $filemanager
+    bindsym $mod+m exec $mailclient
+    bindsym $mod+s exec $musicplayer
+
+    # Kill focused window
+    bindsym $mod+Shift+q kill
+
+    # Start your launcher
+    bindsym $mod+d exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+e exec swaymsg exit
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+minus splitv
+    bindsym $mod+Shift+backslash splith
+
+    # Switch the current container between different layout styles
+    bindsym $mod+Shift+s layout stacking
+    bindsym $mod+Shift+t layout tabbed
+    bindsym $mod+Shift+e layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+f fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    bindsym $mod+Shift+f floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    bindsym $mod+Alt+space focus mode_toggle
+
+    # Move focus to the parent container
+    bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+#    bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+#    bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 30px
+    bindsym $down resize grow height 30px
+    bindsym $up resize shrink height 30px
+    bindsym $right resize grow width 30px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 30px
+    bindsym Down resize grow height 30px
+    bindsym Up resize shrink height 30px
+    bindsym Right resize grow width 30px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+mode "present" {
+    # command starts mirroring
+    bindsym m mode "default"; exec wl-present mirror
+    bindsym Shift+m mode "default"; exec wl-present mirror --fullscreen
+    # these commands modify an already running mirroring window
+    bindsym o mode "default"; exec wl-present set-output
+    bindsym r mode "default"; exec wl-present set-region
+    bindsym Shift+r mode "default"; exec wl-present unset-region
+    bindsym s mode "default"; exec wl-present set-scaling
+    bindsym f mode "default"; exec wl-present toggle-freeze
+    bindsym c mode "default"; exec wl-present custom
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+p mode "present"
+#
+# Utilities:
+#
+    # Special keys to adjust volume via PulseAudio
+    bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
+    bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+    bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+    bindsym --locked XF86AudioMicMute exec pactl set-source-mute \@DEFAULT_SOURCE@ toggle
+    # Special keys to adjust brightness via brightnessctl
+    bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+    # Special key to take a screenshot with grim
+    bindsym Print exec grim -g "$(slurp)" - | wl-copy && notify-send "Screenshot Copied" "Region copied to clipboard" -i clipboard
+    bindsym Shift+Print exec bash -c 'FILENAME="screenshot-$(date +%Y%m%d-%H%M%S).png"; FILEPATH="$HOME/Downloads/$FILENAME"; grim -g "$(slurp)" "$FILEPATH" && notify-send "Screenshot Saved" "Saved to ~/Downloads/$FILENAME" -i "$FILEPATH"'
+
+#
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+# bar {
+#    position top
+#
+#    # When the status_command prints a new line to stdout, swaybar updates.
+#    # The default just shows the current date and time.
+#    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+
+#    colors {
+#        statusline #ffffff
+#        background #323232
+#        inactive_workspace #32323200 #32323200 #5c5c5c
+#    }
+# }
+
+exec $notifications
+# exec_always ~/.config/sway/wallpaper_slideshow.sh
+# exec_always swaybg -i ~/Pictures/wallpaper.png -m fill
+set $wallpapers_path $HOME/workspace/main/WP
+output * bg $(find $wallpapers_path -type f | shuf -n 1) fill
+
+exec /usr/libexec/polkit-gnome-authentication-agent-1
+exec_always waybar
+exec_always kanshi
+exec_always gammastep -l 41.0:28.9 -t 6500:3500
+exec_always wl-paste --type text --watch cliphist store
+exec_always wl-paste --type image --watch cliphist store
+exec xhost +si:localuser:root
+exec dbus-update-activation-environment --all
+exec gnome-keyring-daemon --start --components=secrets
+exec export $(gnome-keyring-daemon)
+exec gentoo-pipewire-launcher restart &
+# Start background mail sync
+exec ~/gentoo-dotfiles-laptop/mail-sync.sh
+
+seat seat0 xcursor_theme gentoo 24
+
+exec_always {
+    gsettings set org.gnome.desktop.interface cursor-theme 'gentoo'
+    gsettings set org.gnome.desktop.interface cursor-size 24
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+}
+
+include ~/.config/sway/config.d/*
+include /etc/sway/config.d/*
+

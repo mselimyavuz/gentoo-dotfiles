@@ -1,0 +1,24 @@
+# --- SwayFX Eye Candy ---
+
+# 1. Corner Radius
+corner_radius 10
+
+# 2. Blur
+# blur_noise is NOT supported in SwayFX (that is a Hyprland command)
+blur enable
+blur_passes 2
+blur_radius 5
+
+# 3. Shadows
+shadows enable
+shadow_blur_radius 20
+shadow_color #0000007F
+
+# 4. Dim Inactive
+default_dim_inactive 0.1
+
+# 5. Layer Effects (Waybar)
+# You must split these into separate lines!
+layer_effects "waybar" blur enable
+layer_effects "waybar" blur_radius 5
+layer_effects "waybar" corner_radius 12

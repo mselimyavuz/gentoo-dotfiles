@@ -1,0 +1,45 @@
+{
+  "edit_mode": "vim",
+  "tab_size": 4,
+  "line_numbers": true,
+  "syntax_highlighting": "monokai",
+  "autosave": true,
+  "format_on_save": true,
+  "terminal_graphics": "sixel",
+  "show_status_bar": true,
+  "autocomplete": true,
+  "keybindings": {
+    "run-cell": [
+      "a-enter",
+      "f5"
+    ],
+    "run-cell-and-select-next": [
+      "a-n",
+      "f6"
+    ],
+    "insert-cell-above": [
+      "a-k"
+    ],
+    "insert-cell-below": [
+      "a-j"
+    ],
+    "scroll-up": [
+      "c-u"
+    ],
+    "scroll-down": [
+      "c-d"
+    ]
+  },
+  "ui": {
+    "color_scheme": "dark",
+    "border_style": "rounded"
+  },
+  "notebook": {
+    "recent_files": [
+      "/home/mselimyavuz/dev/mir-ex/ReviewLecture_1_HelloSpectrum_solution.ipynb",
+      "/home/mselimyavuz/dev/mir-ex/ReviewLecture_1_HelloSpectrum.ipynb"
+    ],
+    "edit_mode": "vi",
+    "syntax_theme": "gruvbox-dark"
+  }
+}

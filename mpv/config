@@ -1,0 +1,8 @@
+# High quality video rendering
+profile=gpu-hq
+
+# Use the Wayland backend explicitly
+gpu-context=wayland
+
+# Hardware decoding (uses your NVIDIA GPU or Ryzen iGPU appropriately)
+hwdec=auto-safe

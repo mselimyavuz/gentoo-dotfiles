@@ -1,0 +1,7 @@
+Inbox   = INBOX
+Archive = [Gmail]/All Mail
+Sent    = [Gmail]/Sent Mail
+Drafts  = [Gmail]/Drafts
+Spam    = [Gmail]/Spam
+Trash   = [Gmail]/Bin
+

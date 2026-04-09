@@ -1,0 +1,204 @@
+/* -----------------------------------------------------------------------------
+ * GRUVBOX DARK + GENTOO ACCENTS PALETTE
+ * ----------------------------------------------------------------------------- */
+@define-color background #282828;
+@define-color background-light #3c3836; 
+@define-color foreground #ebdbb2;
+
+@define-color red #cc241d;
+@define-color green #98971a;
+@define-color yellow #d79921;
+@define-color blue #458588;
+@define-color magenta #b16286;
+@define-color cyan #689d6a;
+@define-color orange #d65d0e;
+
+/* Gentoo Specifics */
+@define-color gentoo-purple #54487A; 
+@define-color gentoo-light  #DDDDFF;
+
+/* -----------------------------------------------------------------------------
+ * GLOBAL RESET
+ * ----------------------------------------------------------------------------- */
+* {
+    border: none;
+    border-radius: 0;
+    /* Primary text: Iosevka | Icons: Symbols Nerd Font */
+    font-family: "Iosevka", "Symbols Nerd Font", monospace;
+    font-size: 14px;
+    min-height: 0;
+}
+
+/* -----------------------------------------------------------------------------
+ * THE BAR (INVISIBLE CONTAINER)
+ * ----------------------------------------------------------------------------- */
+window#waybar {
+    background-color: rgba(0, 0, 0, 0); 
+    color: @foreground;
+}
+
+/* -----------------------------------------------------------------------------
+ * WORKSPACES (THE LEFT PILL)
+ * ----------------------------------------------------------------------------- */
+#workspaces {
+    background-color: @background;
+    margin: 5px 5px 5px 10px;
+    padding: 0 5px;
+    border-radius: 15px;
+    border: 2px solid @background-light;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    background-color: transparent;
+    color: @foreground;
+    margin: 0 2px;
+}
+
+#workspaces button:hover {
+    color: @gentoo-light;
+    background: transparent;
+}
+
+#workspaces button.focused {
+    color: @gentoo-light;
+    background-color: @gentoo-purple;
+    border-radius: 10px;
+    padding: 0 10px;
+    margin: 2px;
+}
+
+#workspaces button.urgent {
+    background-color: @red;
+    color: @background;
+    border-radius: 10px;
+}
+
+/* -----------------------------------------------------------------------------
+ * MODULES (THE PILLS)
+ * ----------------------------------------------------------------------------- */
+
+/* Unified styling for all Pill-style modules */
+#mode, #clock, #cpu, #memory, #temperature, #battery, #network,
+#pulseaudio, #backlight, #disk, #custom-uptime, #custom-updates,
+#custom-weather, #custom-playerctl, #tray, #idle_inhibitor, #mpd,
+#custom-fan, #custom-zram, #bluetooth {
+    background-color: @background-light;
+    color: @foreground;
+    padding: 4px 12px;
+    margin: 5px 4px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Specific Accent Colors */
+#custom-weather { color: #83a598; }
+#custom-zram    { color: @magenta; }
+#custom-fan     { color: @cyan; }
+#backlight      { color: @yellow; }
+#cpu            { color: @green; }
+#memory         { color: @magenta; }
+#disk           { color: @cyan; }
+#temperature    { color: @orange; }
+#custom-updates { color: @orange; }
+#bluetooth      { color: @blue; }
+
+/* -----------------------------------------------------------------------------
+ * SPECIAL MODULE STATES
+ * ----------------------------------------------------------------------------- */
+
+/* CLOCK: The Right-side Anchor */
+#clock {
+    background-color: @blue;
+    color: @background;
+    font-weight: bold;
+    margin-right: 10px; 
+}
+
+/* MODE: Sway resizing/swapping */
+#mode {
+    background-color: @gentoo-purple;
+    color: @gentoo-light;
+    font-weight: bold;
+}
+
+/* BATTERY States */
+#battery.charging, #battery.plugged {
+    background-color: @green;
+    color: @background;
+}
+#battery.warning:not(.charging) {
+    background-color: @yellow;
+    color: @background;
+}
+#battery.critical:not(.charging) {
+    background-color: @red;
+    color: @foreground;
+    animation: blink 0.5s linear infinite alternate;
+}
+
+/* NETWORK States */
+#network.disconnected {
+    background-color: @red;
+    color: @foreground;
+}
+
+/* BLUETOOTH States */
+#bluetooth.connected { color: @green; }
+#bluetooth.off {
+    background-color: @red;
+    color: @background;
+}
+
+/* -----------------------------------------------------------------------------
+ * MUSIC GROUP
+ * ----------------------------------------------------------------------------- */
+#music {
+    background-color: @background-light;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin: 5px 4px;
+    padding: 0 5px;
+}
+
+#custom-media-prev, 
+#custom-media-play-pause, 
+#custom-media-next, 
+#custom-media-label {
+    background-color: transparent;
+    color: @foreground;
+    padding: 0 5px;
+}
+
+#custom-media-prev, #custom-media-next {
+    font-size: 16px;
+    color: @blue;
+}
+
+#custom-media-play-pause {
+    font-size: 16px;
+    color: @green;
+}
+
+#custom-media-play-pause.Paused {
+    color: @orange;
+}
+
+#custom-media-label {
+    font-weight: bold;
+    padding-left: 10px;
+    min-width: 500px;
+}
+
+/* -----------------------------------------------------------------------------
+ * UTILITIES & ANIMATIONS
+ * ----------------------------------------------------------------------------- */
+#tray { background-color: @background; }
+
+@keyframes blink {
+    to {
+        background-color: @foreground;
+        color: @red;
+    }
+}
+

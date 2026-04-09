@@ -1,0 +1,6 @@
+[music_player]
+music_dir = "/home/mselimyavuz/workspace/main/Music"
+
+cover_art_method = "viuer"
+
+backend = "ffmpeg"

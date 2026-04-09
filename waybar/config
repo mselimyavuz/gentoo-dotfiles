@@ -1,0 +1,246 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 40,
+    "margin-top": 5,
+    "margin-left": 10,
+    "margin-right": 10,
+    "modules-left": ["sway/mode", "sway/workspaces", "custom/weather", "group/music"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "pulseaudio", "network", "bluetooth", "backlight", "temperature", "custom/uptime", "battery", "idle_inhibitor"],
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "1": "main/1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "music/5",
+            "6": "6",
+            "7": "7",
+	    "8": "8",
+	    "9": "9",
+            "10": "dump/0"
+        },
+        "persistent_workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+            "5": []
+        }
+    },
+
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+"group/music": {
+        "orientation": "horizontal",
+        "modules": [
+            "custom/media-prev",
+            "custom/media-play-pause",
+            "custom/media-next",
+            "custom/media-label"
+        ]
+    },
+
+    "custom/media-prev": {
+        "format": "",
+        "on-click": "playerctl previous",
+        "tooltip": false
+    },
+
+    "custom/media-play-pause": {
+        "format": "{icon}",
+        "return-type": "json",
+        "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}} - {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{artist}} - {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+        "on-click": "playerctl play-pause",
+        "format-icons": {
+            "Playing": "",
+            "Paused": ""
+        },
+        "tooltip": false
+    },
+
+    "custom/media-next": {
+        "format": "",
+        "on-click": "playerctl next",
+        "tooltip": false
+    },
+
+    "custom/media-label": {
+        "format": "{}",
+        "return-type": "json",
+        "max-length": 200,  // High limit to ensure full text shows
+        "exec": "playerctl -a metadata --format '{\"text\": \"{{markup_escape(title)}} / {{artist}} / {{markup_escape(album)}}\", \"tooltip\": \"{{playerName}} : {{artist}} - {{markup_escape(album)}} - {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+        "on-click": "playerctl play-pause"
+    },
+
+    "custom/weather": {
+    "format": "{}",
+    "tooltip": true,
+    "interval": 3600,
+    "exec": "$HOME/gentoo-dotfiles-laptop/waybar/weather.sh",
+    "return-type": "json"
+    },
+
+    "custom/quote": {
+        "format": "󰚛 {}",
+        "interval": 3600,
+        "exec": "fortune -s | tr '\n' ' '",
+        "on-click": "fortune | yad --text-info --width=400 --height=200 --title='Fortune'",
+        "tooltip": true
+    },
+
+    "custom/uptime": {
+        "format": "󰔟 {}",
+        "exec": "uptime -p | sed 's/up //; s/ days/d/; s/ hours/h/; s/ minutes/m/'",
+        "interval": 60
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰈈",
+            "deactivated": "󰈉"
+        },
+        "tooltip": true
+    },
+	"bluetooth": {
+	    "format": " {status}",
+	    "format-connected": " {device_alias}",
+	    "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+	    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+	    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+	    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+	    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%",
+	    "on-click": "bluetoothctl power on",
+	    "on-click-right": "bluetoothctl power off",
+	    "on-click-middle": "blueman-manager"
+	},
+    "clock": {
+        "format": "󰥔 {0:%I:%M %p}  󰃮 {0:%Y-%m-%d} {0:%A}",
+        "tooltip-format": "<big>{0:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode"          : "month",
+            "mode-mon-col"  : 3,
+            "weeks-pos"     : "right",
+            "on-scroll"     : 1,
+            "on-click-right": "mode",
+            "format": {
+                "months":     "<span color='#d3c6aa'><b>{}</b></span>",
+                "days":       "<span color='#e67e80'>{}</span>",
+                "weeks":      "<span color='#a7c080'><b>W{}</b></span>",
+                "weekdays":   "<span color='#7fbbb3'><b>{}</b></span>",
+                "today":      "<span color='#dbbc7f'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-click-right": "mode",
+            "on-click-forward": "tz_up",
+            "on-click-backward": "tz_down",
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "cpu": {
+        "format": "󰘚 {usage}%",
+        "tooltip": true,
+        "interval": 1,
+        "on-click": "ghostty --class=waybar_btop -e btop"
+    },
+
+    "memory": {
+        "format": "󰍛 {}%",
+        "interval": 1,
+        "on-click": "ghostty --class=waybar_btop -e btop"
+    },
+
+    "temperature": {
+	"hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+        "critical-threshold": 80,
+        "format": "{icon} {temperatureC}°C",
+        "format-icons": ["󱃃", "󰔏", "󱃂"],
+        "on-click": "ghostty -e s-tui"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "network": {
+    "format-wifi": "{essid} ({signalStrength}%) ",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "tooltip-format": "{ifname} via {gwaddr} ",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "Disconnected ⚠",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}",
+    "on-click": "ghostty --class=waybar_nmtui -e nmtui" 
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "󰂰 {volume}%",
+        "format-bluetooth-muted": "󰂲 {icon}",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰥰",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰄝",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol",
+        "on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +2%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -2%"
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "󰋊 {percentage_used}%",
+        "path": "/",
+        "on-click": "ghostty --class=waybar_gdu -e gdu /"
+    },
+
+    "tray": {
+        "icon-size": 18,
+        "spacing": 5
+    },
+    "custom/fan": {
+    "exec": "awk '/speed:/ {print $2 \" RPM\"}' /proc/acpi/ibm/fan",
+    "interval": 5,
+    "format": "󰈐 {}"
+	},
+"custom/zram": {
+    "exec": "awk '{total+=$3; used+=$6} END {if (total>0) printf \"%.0f%%\\n\", (used/total)*100; else print \"0%\"}' /sys/block/zram*/mm_stat",
+    "interval": 10,
+    "format": "󰘚 {}",
+    "tooltip-format": "zRAM Utilization",
+    "on-click": "ghostty --class=waybar_zram -e watch zramctl"
+},
+"backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "on-scroll-up": "brightnessctl set 10%+",
+    "on-scroll-down": "brightnessctl set 10%-",
+    "min-length": 6
+},
+}

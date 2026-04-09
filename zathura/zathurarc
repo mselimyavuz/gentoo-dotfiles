@@ -1,0 +1,63 @@
+# ~/.config/zathura/zathurarc
+
+# --- UI Settings ---
+set statusbar-h-padding 10
+set statusbar-v-padding 10
+set selection-clipboard clipboard
+set window-title-home-tilde true
+set statusbar-basename true
+
+# --- Smooth Scrolling & Rendering ---
+set scroll-step 50
+set render-loading true
+
+# --- Dark Mode / Recolor ---
+# This mimics a "Gentoo Dark" / "Sway" aesthetic
+set recolor "false"
+set recolor-keephue "false"
+
+# Dark Gray Background, Off-white Text
+set default-bg                  "#1a1b26"
+set default-fg                  "#c0caf5"
+
+set statusbar-fg                "#c0caf5"
+set statusbar-bg                "#24283b"
+
+set inputbar-bg                 "#1a1b26"
+set inputbar-fg                 "#bb9af7"
+
+set notification-error-bg       "#f7768e"
+set notification-error-fg       "#c0caf5"
+
+set notification-warning-bg     "#e0af68"
+set notification-warning-fg     "#1a1b26"
+
+set highlight-color             "rgba(224, 175, 104, 0.5)"
+set highlight-active-color      "rgba(122, 162, 247, 0.5)"
+set highlight-fg                "#c0caf5"
+
+set completion-bg               "#24283b"
+set completion-fg               "#7aa2f7"
+set completion-highlight-fg     "#1a1b26"
+set completion-highlight-bg     "#7aa2f7"
+
+set recolor-lightcolor          "#1a1b26"
+set recolor-darkcolor           "#c0caf5"
+
+set recolor-keephue             "true"
+
+# --- Keybindings (Vim-style) ---
+map [normal] r reload
+map [normal] p print
+map [normal] i recolor
+map [normal] f toggle_index
+map [normal] <C-i> zoom in
+map [normal] <C-o> zoom out
+
+# --- Wayland Specifics ---
+set window-title-page true
+
+set dbus-raise-window true
+set synctex true
+set synctex-editor-command "foot sh -c 'nvr --remote-silent %f -c %l || read'"
+
