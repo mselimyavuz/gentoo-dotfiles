@@ -28,9 +28,10 @@ PACKAGES=(
     "sys-fs/gdu"
     "games-misc/fortune-mod"
     "app-text/zathura"
-    "app-text/zathura-pdf-poppler"
+    "app-text/zathura-pdf-mupdf"
     "app-misc/ranger"
     "mail-client/aerc"
+    "app-misc/urlview-ng"
 )
 
 # Colors
@@ -111,7 +112,7 @@ REMOVE_LIST=(
     "$HOME/.config/ranger" "$HOME/.config/aerc" "$HOME/.config/termusic"
     "$HOME/.config/euporie" "$HOME/.config/zathura"
     "$HOME/.local/bin/portage-cleaner.py"
-    "$HOME/mail-sync.sh"
+    "$HOME/mail-sync.sh" "$HOME/.urlview"
 )
 
 for item in "${REMOVE_LIST[@]}"; do
@@ -143,6 +144,7 @@ link_config "$DOTFILES_DIR/.zshrc" "$HOME/.zshrc"
 link_config "$DOTFILES_DIR/.tmux.conf" "$HOME/.tmux.conf"
 link_config "$DOTFILES_DIR/.tmux" "$HOME/.tmux"
 link_config "$DOTFILES_DIR/mail-sync.sh" "$HOME/mail-sync.sh"
+link_config "$DOTFILES_DIR/.urlview" "$HOME/.urlview"
 
 # Scripts (linking specific known scripts to ~/.local/bin)
 link_config "$DOTFILES_DIR/scripts/portage-cleaner.py" "$HOME/.local/bin/portage-cleaner.py"

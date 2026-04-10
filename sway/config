@@ -20,7 +20,7 @@ set $term foot
 set $browser librewolf
 set $filemanager $term -e ranger
 set $mailclient $term -e aerc
-set $musicplayer $term -e termusic
+set $musicplayer $term -e /home/mselimyavuz/.cargo/bin/termusic
 
 set $monitor HDMI-A-1
 
@@ -154,14 +154,6 @@ for_window [app_id="org.pwmt.zathura"] focus
 #
 # You can also configure each device individually.
 # Read `man 5 sway-input` for more information about this section.
-
-input type:touchpad {
-    dwt enabled             # Disable While Typing
-    tap enabled             # Tap to click
-    natural_scroll enabled  # Invert scrolling direction (Mac-style)
-    pointer_accel 0.5       # Speed: -1.0 to 1.0 (0.0 is default)
-    accel_profile adaptive  # adaptive (speed changes with movement) or flat
-}
 
 input type:keyboard {
 	xkb_layout "us,tr"

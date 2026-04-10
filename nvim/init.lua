@@ -36,7 +36,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>')
 vim.keymap.set('t', '<C-q>', [[<C-\><C-n>]], { desc = 'Exit terminal' })
 vim.keymap.set('i', '<C-h>', '<C-o>^')
 vim.keymap.set('i', '<C-l>', '<C-o>$')
-vim.keymap.set('n', '<C-->', '<cmd>split<CR>', { desc = 'Horizontal split' })
+vim.keymap.set('n', '<C-_>', '<cmd>split<CR>', { desc = 'Horizontal split' })
 vim.keymap.set('n', '<C-\\>', '<cmd>vsplit<CR>', { desc = 'Vertical split' })
 
 vim.keymap.set('n', '<leader>r', function()
