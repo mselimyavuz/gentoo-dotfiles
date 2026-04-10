@@ -171,7 +171,7 @@ input type:keyboard {
     bindsym $mod+w exec $browser
     bindsym $mod+n exec $filemanager
     bindsym $mod+m exec $mailclient
-    bindsym $mod+s exec $musicplayer
+    bindsym $mod+t exec $musicplayer
 
     # Kill focused window
     bindsym $mod+Shift+q kill
