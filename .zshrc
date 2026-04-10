@@ -40,7 +40,7 @@ yt-playlist() {
     "$1"
 }
 
-bork-backup() {
+borg-backup() {
    sudo borg create --stats --progress --compression lz4 \
     --exclude-from /home/mselimyavuz/gentoo-dotfiles/borg-excludes.txt \
     /mnt/backup::gentoo-backup-$(date +%F) \
