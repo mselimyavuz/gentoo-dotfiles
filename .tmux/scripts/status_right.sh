@@ -9,9 +9,10 @@ WARN="#fabd2f"
 CRIT="#fb4934"
 
 get_disk_usage() {
-    df_output=$(df -h -P /dev/nvme0n1p3 2>/dev/null | awk 'NR==2{printf "%s/%s (%s)", $3, $2, $5}')
-    if [[ -n "$df_output" ]]; then
-        echo "📊 $df_output"
+    df_output_1=$(df -h -P /dev/nvme0n1p3 2>/dev/null | awk 'NR==2{printf "%s/%s (%s)", $3, $2, $5}')
+    df_output_2=$(df -h -P /dev/sda1 2>/dev/null | awk 'NR==2{printf "%s/%s (%s)", $3, $2, $5}')
+    if [[ -n "$df_output_1" ]]; then
+        echo "📊 $df_output_1 $df_output_2"
     else
         echo "📊 N/A"
     fi
