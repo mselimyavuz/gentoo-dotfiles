@@ -32,44 +32,18 @@ alias less="nvim -u NORC -R -M -c 'runtime! macros/less.vim'"
 eval "$(oh-my-posh init zsh --config /home/mselimyavuz/gentoo-dotfiles/oh-my-posh-theme.json)"
 fastfetch
 
-wifi-menu() {
-    echo "Scanning for networks..."
-    wpa_cli scan > /dev/null
-    sleep 2
+yt-playlist() {
+    yt-dlp -x --audio-format mp3 --audio-quality 0 --yes-playlist \
+    --embed-metadata --embed-thumbnail \
+    -o "%(playlist_index)s-%(title)s.%(ext)s" \
+    --exec "post_process:echo '%(playlist_index)s-%(title)s.mp3' >> '%(playlist_title)s.m3u'" \
+    "$1"
+}
 
-    local selected_line
-    selected_line=$(wpa_cli scan_results | tail -n +3 | \
-        fzf --header="[WIFI SCAN] Select SSID to connect" \
-            --reverse --height=40% --ansi)
-
-    [ -z "$selected_line" ] && return
-
-    local ssid=$(echo "$selected_line" | awk '{print $NF}')
-    local security=$(echo "$selected_line" | awk '{print $4}')
-
-    local net_id=$(wpa_cli list_networks | grep -w "$ssid" | awk '{print $1}')
-
-    if [ -n "$net_id" ]; then
-        echo "Switching to known network: $ssid (ID: $net_id)"
-        wpa_cli select_network "$net_id"
-    else
-        echo "New network detected: $ssid"
-        
-        net_id=$(wpa_cli add_network | tail -1)
-        
-        if [[ "$security" == *"[WPA"* ]]; then
-            read -rs -p "Enter Password for $ssid: " pass
-            echo
-            wpa_cli set_network "$net_id" ssid "\"$ssid\""
-            wpa_cli set_network "$net_id" psk "\"$pass\""
-        else
-            wpa_cli set_network "$net_id" ssid "\"$ssid\""
-            wpa_cli set_network "$net_id" key_mgmt NONE
-        fi
-        
-        wpa_cli select_network "$net_id"
-        wpa_cli enable_network "$net_id"
-        wpa_cli save_config
-    fi
+bork-backup() {
+   sudo borg create --stats --progress --compression lz4 \
+    --exclude-from /home/mselimyavuz/gentoo-dotfiles/borg-excludes.txt \
+    /mnt/backup::gentoo-backup-$(date +%F) \
+    /
 }
 
